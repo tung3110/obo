@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    DOCKER_REGSITRY_USERNAME        = credentials('DOCKER_REGSITRY_USERNAME')
-    DOCKER_REGISTRY_USERNAME    = credentials('DOCKER_REGISTRY_USERNAME')
+    DOCKER_REGSITRY_USERNAME    = credentials('DOCKER_REGSITRY_USERNAME')
+    DOCKER_REGISTRY_PASSWORD    = credentials('DOCKER_REGISTRY_PASSWORD')
   }
 
   stages {
