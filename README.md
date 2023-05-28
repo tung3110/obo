@@ -25,4 +25,3 @@ Truy cập ```/admin``` để vào trang admin.
 - [Java Spring](https://spring.io/) - The web framework used
 - [Maven](https://mvnrepository.com/) - Dependency Management
 
-### Docker Build
