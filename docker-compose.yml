@@ -1,20 +1,53 @@
-version: '2.2'
-services: 
-    mysql :
-        image: mysql
-        restart: always
-        volumes: 
-            - /Users/techmaster/Desktop/obo.sql:/docker-entrypoint-initdb.d/init.sql
-        environment: 
-            MYSQL_ROOT_PASSWORD : mysql 
-            MYSQL_DATABASE : obo 
-            MYSQL_USER : admin 
-            MYSQL_PASSWORD : 123456
-    
-    web :
-        image: project-maven:v1
-        depends_on: 
-            - mysql
-        ports: 
-            - "8005:8080"
-        restart: always
+version: "2.2"
+services:
+  mysql:
+    image: mysql
+    container_name: "obo-mysql"
+    restart: always
+    volumes:
+      - ./obo.sql:/docker-entrypoint-initdb.d/init.sql
+      - obo_db_data:/var/lib/mysql
+    networks:
+      - obo_net
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: obo
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123456
+
+  # Includes build docker image from context and dockerfile
+  obo-app:
+    image: obo:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "obo-app"
+    restart: always
+    depends_on:
+      - mysql
+    networks:
+      - obo_net
+    env_file:
+      - ./.obo.env
+    ports:
+      - "8005:8080"
+
+  # Need image has been built
+  # obo-app:
+  #   image: obo:v1
+  #   container_name: "obo-app"
+  #   restart: always
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - obo_net
+  #   env_file:
+  #     - ./.obo.env
+  #   ports:
+  #     - "8005:8080"
+
+volumes:
+  obo_db_data:
+
+networks:
+  obo_net:
