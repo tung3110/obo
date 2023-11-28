@@ -19,6 +19,10 @@ spec:
           image: obo:v0
           ports:
             - containerPort: 8080
-          env: 
-          - name: DATABASE_URL
-            value: "jdbc:mysql://10.0.2.15:3336/obo?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+          env:
+            - name: DATABASE_URL
+              value: "jdbc:mysql://10.0.2.15:3336/obo?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+            - name: DATABASE_USERNAME
+              value: "admin"
+            - name: DATABASE_PASSWORD
+              value: "123456"
